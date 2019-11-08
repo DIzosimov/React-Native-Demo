@@ -30,7 +30,7 @@ const LoginForm = props => {
 
       <TouchableOpacity 
         style={styles.submitButton}
-        onPress={() => props.loginHandler}
+        onPress={props.loginHandler}
       />
 
       <Text style={styles.submitButtonText}>Submit</Text>

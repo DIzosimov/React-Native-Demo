@@ -13,7 +13,11 @@ import { authenticate } from "../../Services/AuthService"
 class HomeScreen extends Component {
   state = {
     articles: [],
-    renderLoginForm: false
+    renderLoginForm: false,
+    authenticated: false,
+    user: "",
+    email: "",
+    password: ""
   }
 
   componentDidMount() {
@@ -53,26 +57,36 @@ class HomeScreen extends Component {
     }
   }
 
+  credentialHandler = text => {
+    this.setState({
+      [text.target.name]: text.target.value
+    })
+  }
+
   renderLogin() {
-    if (this.state.renderLoginForm) {
-    return (
-      <>
-        <LoginForm
-          loginHandler={this.onLogin.bind(this)}
-          credentialHandler={this.credentialStateHandler}
-        />
-      </>
-    )
+    if (this.state.authenticated) {
+      return <Text>Hi {this.state.user}</Text>
     } else {
+      if (this.state.renderLoginForm) {
       return (
         <>
-          <Button
-            title="Login"
-            onPress={() => this.setState({ renderLoginForm: true})}
+          <LoginForm
+            loginHandler={this.onLogin.bind(this)}
+            credentialHandler={this.credentialStateHandler}
           />
         </>
       )
-    } 
+      } else {
+        return (
+          <>
+            <Button
+              title="Login"
+              onPress={this.setState({ renderLoginForm: true})}
+            />
+          </>
+        )
+      } 
+    }
   }
 
   render() {
